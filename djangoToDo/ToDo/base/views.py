@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Task
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -16,11 +18,11 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user=True
 
     def get_success_url(self):
-        return reverse_lazy('task')
+        return reverse_lazy('tasks')
 
 
 
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
     
