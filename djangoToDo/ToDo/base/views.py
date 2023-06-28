@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -25,6 +26,12 @@ class CustomLoginView(LoginView):
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(complete=self.user).count()
+        return context
     
 
 class TaskDetail(LoginRequiredMixin,DetailView):
