@@ -13,9 +13,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
-
-
-
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
     fields = '__all__'
