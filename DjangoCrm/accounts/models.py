@@ -11,9 +11,13 @@ class Customer(models.Model):
         return self.name
     
 class Product(models.Model):
+    CATEGORY = (
+        ('Indoor Item','Indoor Item'),
+        ('Outdoor Item','Outdoor Item')
+    )
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField(null=True)
-    category = models.CharField(max_length=200, null=True)
+    category = models.CharField(max_length=200, null=True, choices=CATEGORY)
     description = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
