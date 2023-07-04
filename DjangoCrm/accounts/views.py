@@ -4,6 +4,11 @@ from .models import *
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
+    total_customers = customers.count()
+    total_orders = orders.count()
+    delivered = orders.filter('Delivered')
+    delivered = orders.filter('Pending')
+
     context = {'orders':orders, 'customers':customers}
     return render(request, 'accounts/dashboard.html', context)
 
