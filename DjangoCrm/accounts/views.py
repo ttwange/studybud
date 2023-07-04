@@ -41,7 +41,7 @@ def createOrder(request):
     return render(request, 'accounts/order_form.html', context)
 
 
-def updateOrder(request):
+def updateOrder(request, pk):
     form = OrderForm()
     context = {'form':form}
     return render(request, 'accounts/order_form.html', context)
