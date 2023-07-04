@@ -14,7 +14,8 @@ def home(request):
     
     return render(request, 'accounts/dashboard.html', context)
 
-def customer(request):
+def customer(request,pk):
+    customer = Customer.objects.get(id=pk)
     return render(request, 'accounts/customer.html')
 
 def products(request):
