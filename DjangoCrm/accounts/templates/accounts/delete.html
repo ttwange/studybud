@@ -1,8 +1,10 @@
 {% extends 'accounts/main.html' %}
 {% load static %}
 {% block content%}
-<p>Confirm Delete "{item}"</p>
+<p>Confirm Delete "{{item}}"</p>
+
 <form method="POST">
+  {% csrf_token %}
   <a href="{% url 'home' %}">Cancel</a>
   <input type="submit" name="Confirm">
 </form>
