@@ -2,16 +2,22 @@
 {% load static %}
 {% block content%}
 
-<p>Confirm Delete {{item}}</p>
+<br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-body">
+      <p>Confirm Delete {{item}}</p>
 
-<form action="{% url 'delete_Order' item.id %}" method="POST">
+      <form action="{% url 'delete_Order' item.id %}" method="POST">
 
-  {% csrf_token %}
+        {% csrf_token %}
 
-  <a href="{% url 'home' %}">Cancel</a>
+        <a class="btn btn-warning" href="{% url 'home' %}">Cancel</a>
 
-  <input type="submit" name="Confirm">
+        <input class="btn btn-danger" type="submit" name="Confirm">
 
-</form>
-
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock content %}
