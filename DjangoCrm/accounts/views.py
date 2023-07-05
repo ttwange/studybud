@@ -27,7 +27,9 @@ def customer(request, pk):
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
     orders_count = orders.count()
-    context = {'customer':customer, 'orders':orders,'orders_count':orders_count}
+    myFilter = OrderFilter()
+    context = {'customer':customer, 'orders':orders,'orders_count':orders_count,
+               'myFilter':myFilter}
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request, pk):
