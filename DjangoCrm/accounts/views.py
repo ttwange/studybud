@@ -31,9 +31,9 @@ def customer(request, pk):
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request, pk):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product','status'))
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product','status'), extra=5)
     customer = Customer.objects.get(id=pk)
-    formset = OrderFormSet(instance=customer)
+    formset = OrderFormSet(queryset=Order.objects.none(),instance=customer)
     if request.method == 'POST':
         formset = OrderFormSet(request.POST, instance=customer)
         if formset.is_valid():
