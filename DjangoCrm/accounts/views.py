@@ -28,7 +28,7 @@ def customer(request, pk):
     orders = customer.order_set.all()
     orders_count = orders.count()
     myFilter = OrderFilter(request.Get, queryset= orders)
-    
+    orders = myFilter.qs
     context = {'customer':customer, 'orders':orders,'orders_count':orders_count,
                'myFilter':myFilter}
     return render(request, 'accounts/customer.html', context)
