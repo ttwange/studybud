@@ -31,7 +31,7 @@ def customer(request, pk):
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request, pk):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('products','status'))
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product','status'))
     customer = Customer.objects.get(id=pk)
     formset = OrderFormSet(instance=customer)
     if request.method == 'POST':
