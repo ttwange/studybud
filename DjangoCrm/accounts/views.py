@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .forms import OrderForm
+from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
 
 
@@ -21,7 +21,13 @@ def home(request):
     return render(request, 'accounts/dashboard.html', context)
 
 def registerPage(request):
-    form = UserCreationForm()
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form =UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('/')
+        
     context = {'form':form}
     return render(request, 'accounts/register.html', context)
 
