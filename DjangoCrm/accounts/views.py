@@ -9,17 +9,35 @@ from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
 
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form =CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                pass1 = form.cleaned_data.get('password1')
+                messages.success(request, 'Account successful created')
+                return redirect('login')
+            
+        context = {'form':form}
+        return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username,password=password)
-        if user is not None:
-            login(request,user)
-            return redirect('home')
-    context={}
-    return render(request, 'accounts/login.html', context)
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username,password=password)
+            if user is not None:
+                login(request,user)
+                return redirect('home')
+        context={}
+        return render(request, 'accounts/login.html', context)
 
 def logoutUser(request):
     logout(request)
@@ -38,19 +56,6 @@ def home(request):
                'total_orders':total_orders,'delivered':delivered,'pending':pending}
     
     return render(request, 'accounts/dashboard.html', context)
-
-def registerPage(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form =CreateUserForm(request.POST)
-        if form.is_valid():
-           form.save()
-           pass1 = form.cleaned_data.get('password1')
-           messages.success(request, 'Account successful created')
-           return redirect('login')
-        
-    context = {'form':form}
-    return render(request, 'accounts/register.html', context)
 
 @login_required(login_url='login')
 def products(request):
