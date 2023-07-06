@@ -46,6 +46,8 @@ def loginPage(request):
     context={}
     return render(request, 'accounts/login.html', context)
 
+def logoutUser(request):
+    return redirect('login')
 
 def products(request):
     products = Product.objects.all()
