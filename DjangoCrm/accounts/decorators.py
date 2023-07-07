@@ -8,3 +8,10 @@ def unauthenticated_user(view_func):
         else:
             return view_func(request,*args,**kwargs)
     return  wrapper_function
+
+def allowed_users(allowed_roles=[]):
+    def decorators(view_func):
+      def wrapper_func(request, *args, **kwargs):
+          return view_func(request, *args, **kwargs):
+      return wrapper_func
+    return decorators
