@@ -10,21 +10,19 @@ from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
 from .decorators import unauthenticated_user
 
+@unauthenticated_user
 def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        form = CreateUserForm()
-        if request.method == 'POST':
-            form =CreateUserForm(request.POST)
-            if form.is_valid():
-                form.save()
-                pass1 = form.cleaned_data.get('password1')
-                messages.success(request, 'Account successful created')
-                return redirect('login')
-            
-        context = {'form':form}
-        return render(request, 'accounts/register.html', context)
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form =CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            pass1 = form.cleaned_data.get('password1')
+            messages.success(request, 'Account successful created')
+            return redirect('login')
+        
+    context = {'form':form}
+    return render(request, 'accounts/register.html', context)
 
 @unauthenticated_user
 def loginPage(request):
