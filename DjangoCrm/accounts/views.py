@@ -57,6 +57,8 @@ def home(request):
     
     return render(request, 'accounts/dashboard.html', context)
 
+def userPage(request):
+
 @login_required(login_url='login')
 def products(request):
     products = Product.objects.all()
