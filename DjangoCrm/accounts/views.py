@@ -3,12 +3,13 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
-from .decorators import unauthenticated_user, allowed_users
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
 @unauthenticated_user
 def registerPage(request):
@@ -16,8 +17,10 @@ def registerPage(request):
     if request.method == 'POST':
         form =CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            pass1 = form.cleaned_data.get('password1')
+            user = form.save()
+            group = Group.objects.get(name='customer')
+            user.groups.add(group)
+            
             messages.success(request, 'Account successful created')
             return redirect('login')
         
@@ -41,7 +44,7 @@ def logoutUser(request):
     return redirect('login')
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
+@admin_only
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
