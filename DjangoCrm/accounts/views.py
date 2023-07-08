@@ -20,7 +20,7 @@ def registerPage(request):
             user = form.save()
             group = Group.objects.get(name='customer')
             user.groups.add(group)
-            
+
             messages.success(request, 'Account successful created')
             return redirect('login')
         
@@ -58,6 +58,8 @@ def home(request):
     
     return render(request, 'accounts/dashboard.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def userPage(request):
     context = {}
     return render(request, 'accounts/user.html', context)
@@ -68,6 +70,7 @@ def products(request):
     return render(request, 'accounts/products.html', {'products':products})
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
