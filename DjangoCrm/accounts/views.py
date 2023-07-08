@@ -61,7 +61,9 @@ def home(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
 def userPage(request):
-    context = {}
+    orders = request.user.customer.order_set.all()
+    print('ORDERS:', orders)
+    context = {'orders':orders}
     return render(request, 'accounts/user.html', context)
 
 @login_required(login_url='login')
