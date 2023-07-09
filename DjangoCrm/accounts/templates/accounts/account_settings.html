@@ -9,6 +9,18 @@
       <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back t0 Profile</a>
       <hr>
       <h3 style="text-align: center;">Accounts Settings</h3>
+      <hr>
+      <img class="profile-pic" src="">
+
+    </div>
+
+  </div>
+  <div class="col-md-9">
+    <div class="card card-body">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" name="Update information" id="">
+      </form>
 
     </div>
 
