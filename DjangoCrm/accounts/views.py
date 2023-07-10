@@ -77,7 +77,7 @@ def userPage(request):
 def accountSettings(request):
     user = request.user
     form = CustomerForm(instance=user)
-    context={}
+    context={'form':form}
     return render(request, 'accounts/account_settings.html', context)
 
 
