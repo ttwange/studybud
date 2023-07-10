@@ -10,5 +10,5 @@ def customer_profile(sender, instance, created, **kwargs):
         Customer.objects.create(
             user = instance,
             )
-
+        print('profile created!!')
 post_save.connect(customer_profile, sender=User)
