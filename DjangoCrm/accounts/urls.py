@@ -16,7 +16,7 @@ urlpatterns = [
     path('update_Order/<str:pk>/', views.updateOrder, name="update_Order"),
     path('delete_Order/<str:pk>/', views.deleteOrder, name="delete_Order"),
 
-    path('reset_password/', auth_views.PasswordResetView.as_view()),
+    path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view()),
     path('reset_password/', auth_views.PasswordResetConfirmView.as_view()),
     path('reset_password/', auth_views.PasswordResetCompleteView.as_view()),
