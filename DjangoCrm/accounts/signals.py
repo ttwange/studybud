@@ -11,4 +11,4 @@ def customer_profile(sender, instance, created, **kwargs):
             user = instance,
             )
 
-        
+post_save.connect(customer_profile, sender=User)
